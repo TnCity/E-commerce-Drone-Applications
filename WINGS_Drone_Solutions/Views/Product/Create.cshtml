@@ -1,0 +1,102 @@
+﻿@model WINGS.Web.ViewModels.ProductViewModel
+
+<h2>Add Product</h2>
+
+<form asp-action="Create"
+      method="post"
+      enctype="multipart/form-data">
+
+    <div class="mb-3">
+        <label asp-for="ProductName" class="form-label"></label>
+        <input asp-for="ProductName" class="form-control" />
+        <span asp-validation-for="ProductName" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="CategoryId" class="form-label"></label>
+        <select asp-for="CategoryId"
+                asp-items="Model.Categories"
+                class="form-select">
+            <option value="">-- Select Category --</option>
+        </select>
+        <span asp-validation-for="CategoryId" class="text-danger"></span>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label asp-for="Price" class="form-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label asp-for="Stock" class="form-label"></label>
+                <input asp-for="Stock" class="form-control" />
+                <span asp-validation-for="Stock" class="text-danger"></span>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Brand" class="form-label"></label>
+        <input asp-for="Brand" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label"></label>
+        <textarea asp-for="Description"
+                  class="form-control"
+                  rows="4"></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ImageFile" class="form-label"></label>
+        <input asp-for="ImageFile"
+               type="file"
+               class="form-control" />
+    </div>
+
+    <hr />
+
+    <h5>Product Status</h5>
+
+    <div class="form-check">
+        <input asp-for="IsFeatured" class="form-check-input" />
+        <label asp-for="IsFeatured" class="form-check-label">
+            Featured Product
+        </label>
+    </div>
+
+    <div class="form-check">
+        <input asp-for="IsTrending" class="form-check-input" />
+        <label asp-for="IsTrending" class="form-check-label">
+            Trending Product
+        </label>
+    </div>
+
+    <div class="form-check mb-4">
+        <input asp-for="IsActive" class="form-check-input" />
+        <label asp-for="IsActive" class="form-check-label">
+            Active Product
+        </label>
+    </div>
+
+    <button type="submit" class="btn btn-success">
+        Save Product
+    </button>
+
+    <a asp-action="Index" class="btn btn-secondary">
+        Cancel
+    </a>
+
+</form>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

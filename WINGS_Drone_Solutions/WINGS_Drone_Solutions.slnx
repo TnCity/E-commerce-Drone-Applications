@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="../WINGS.BLL/WINGS.BLL.csproj" />
+  <Project Path="../WINGS.DAL/WINGS.DAL.csproj" />
+  <Project Path="../WINGS.Repository/WINGS.Repository.csproj" />
+  <Project Path="WINGS.Web.csproj" />
+</Solution>

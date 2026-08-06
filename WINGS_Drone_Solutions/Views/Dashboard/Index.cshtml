@@ -1,0 +1,46 @@
+﻿@model WINGS.Web.ViewModels.DashboardViewModel
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+<h2>Admin Dashboard</h2>
+
+<div class="row">
+
+    <div class="col-md-3">
+        <div class="card bg-primary text-white mb-3">
+            <div class="card-body text-center">
+                <h5>Total Categories</h5>
+                <h2>@Model.TotalCategory</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card bg-success text-white mb-3">
+            <div class="card-body text-center">
+                <h5>Total Products</h5>
+                <h2>@Model.TotalProduct</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card bg-warning text-dark mb-3">
+            <div class="card-body text-center">
+                <h5>Total Customers</h5>
+                <h2>@Model.TotalCustomer</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card bg-danger text-white mb-3">
+            <div class="card-body text-center">
+                <h5>Total Orders</h5>
+                <h2>@Model.TotalOrder</h2>
+            </div>
+        </div>
+    </div>
+
+</div>

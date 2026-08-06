@@ -1,0 +1,28 @@
+﻿@model WINGS.DAL.Entities.Category
+
+<h2>Edit Category</h2>
+
+<form asp-action="Edit" method="post">
+
+    <input type="hidden" asp-for="CategoryId" />
+
+    <div class="mb-3">
+        <label asp-for="CategoryName"></label>
+        <input asp-for="CategoryName" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Description"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ImageUrl"></label>
+        <input asp-for="ImageUrl" class="form-control" />
+    </div>
+
+    <button class="btn btn-primary">Update</button>
+
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+
+</form>

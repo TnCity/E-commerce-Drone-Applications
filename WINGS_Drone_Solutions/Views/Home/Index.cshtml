@@ -1,0 +1,370 @@
+﻿@model WINGS.Web.ViewModels.HomeViewModel
+
+@{
+    ViewData["Title"] = "Home";
+}
+
+<!-- ================= HERO SECTION ================= -->
+<div class="container-fluid py-4" style="background:#f4f8fc;">
+
+<div class="container-fluid mb-5">
+
+    <div class="row align-items-center rounded-4 shadow-lg p-5"
+         style="background:linear-gradient(135deg,#3d8afc,#3d8afc); min-height:600px;">
+
+        <!-- Left Section -->
+
+        <div class="col-lg-6 text-white">
+
+            <span class="badge bg-warning text-dark px-3 py-2 fs-6 mb-4">
+                🚀 India's Trusted Drone Store
+            </span>
+
+            <h1 class="display-2 fw-bold mb-4">
+                WINGS Drone <br />
+                Solutions
+            </h1>
+
+            <p class="fs-4 mb-4">
+                Fly Higher. Build Smarter.
+            </p>
+
+            <p class="fs-5 text-light mb-5">
+                Premium Drone Components,
+                Flight Controllers,
+                FPV Systems,
+                GPS Modules &
+                Professional Accessories.
+            </p>
+
+            <div class="mb-5">
+
+                <a asp-controller="Product"
+                   asp-action="Index"
+                   class="btn btn-warning btn-lg px-5 me-3 rounded-pill fw-bold">
+                    Shop Now
+                </a>
+
+                <a href="#products"
+                   class="btn btn-outline-light btn-lg px-5 rounded-pill">
+                    Explore
+                </a>
+
+            </div>
+
+            <div class="row text-center">
+
+                <div class="col-4">
+                    <h2 class="fw-bold text-warning">100+</h2>
+                    <p class="mb-0">Products</p>
+                </div>
+
+                <div class="col-4">
+                    <h2 class="fw-bold text-warning">25+</h2>
+                    <p class="mb-0">Categories</p>
+                </div>
+
+                <div class="col-4">
+                    <h2 class="fw-bold text-warning">24×7</h2>
+                    <p class="mb-0">Support</p>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Right Section -->
+
+        <div class="col-lg-6 text-center">
+
+            <img src="~/images/drone-banner2.jpg"
+                 alt="Drone"
+                 class="img-fluid"
+                 style="width:100%;
+            max-width:850px;
+            height:500px;
+            object-fit:cover;
+            border-radius:20px;
+            box-shadow:0 20px 40px rgba(0,0,0,.35);" />
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ================= CATEGORIES ================= -->
+
+<h2 class="mb-4 text-center">
+    Shop By Categories
+</h2>
+
+<div class="row mb-5">
+
+    @foreach (var item in Model.Categories)
+    {
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+
+            <div class="card h-100 shadow-sm border-0">
+
+                @if (!string.IsNullOrEmpty(item.ImageUrl))
+                {
+                    <img src="@item.ImageUrl"
+                         class="card-img-top"
+                         style="height:220px;object-fit:cover;">
+                }
+
+                <div class="card-body text-center">
+
+                    <h5>@item.CategoryName</h5>
+
+                    <p class="text-muted small">
+                        Explore quality drone components.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+    }
+
+</div>
+<h2 class="text-center mb-4">⭐ Featured Products</h2>
+
+<div class="row mb-5">
+
+    @foreach (var item in Model.FeaturedProducts)
+    {
+        <div class="col-lg-3 col-md-4 mb-4">
+            <div class="card shadow h-100">
+                <img src="@item.ImageUrl"
+                     class="card-img-top"
+                     style="height:220px;object-fit:cover;" />
+
+                <div class="card-body">
+                    <h5>@item.ProductName</h5>
+                    <p class="text-success fw-bold">₹ @item.Price</p>
+
+                    <a asp-controller="Product"
+                       asp-action="Details"
+                       asp-route-id="@item.ProductId"
+                       class="btn btn-primary w-100">
+                        View Details
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+
+<!-- ================= PRODUCTS ================= -->
+
+<h2 id="products" class="text-center mb-4">
+    Latest Products
+</h2>
+
+<div class="row">
+
+    @foreach (var item in Model.LatestProducts)
+    {
+        <div class="col-lg-4 col-md-6 mb-4">
+
+            <div class="card shadow border-0 h-100">
+
+                @if (!string.IsNullOrEmpty(item.ImageUrl))
+                {
+                    <img src="@item.ImageUrl"
+                         class="card-img-top"
+                         style="height:260px;object-fit:cover;">
+                }
+
+                <div class="card-body">
+
+                    <div class="mb-2">
+
+                        @if (item.IsFeatured)
+                        {
+                            <span class="badge bg-primary">
+                                Featured
+                            </span>
+                        }
+
+                        @if (item.IsTrending)
+                        {
+                            <span class="badge bg-warning text-dark">
+                                Trending
+                            </span>
+                        }
+
+                    </div>
+
+                    <h5 class="fw-bold">
+                        @item.ProductName
+                    </h5>
+
+                    <p class="text-muted mb-1">
+                        @item.Category?.CategoryName
+                    </p>
+
+                    <p>
+                        <strong>Brand :</strong>
+                        @item.Brand
+                    </p>
+
+                    <h4 class="text-success">
+                        ₹ @item.Price
+                    </h4>
+
+                    <p>
+
+                        @if (item.Stock > 0)
+                        {
+                            <span class="badge bg-success">
+                                In Stock
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger">
+                                Out Of Stock
+                            </span>
+                        }
+
+                    </p>
+
+                </div>
+
+                <div class="card-footer bg-white border-0">
+
+                    <a asp-controller="Product"
+                       asp-action="Details"
+                       asp-route-id="@item.ProductId"
+                       class="btn btn-primary w-100">
+                        View Details
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+    }
+
+</div>
+
+<h2 class="text-center mb-4">🔥 Trending Products</h2>
+
+<div class="row mb-5">
+
+    @foreach (var item in Model.TrendingProducts)
+    {
+        <div class="col-lg-3 col-md-4 mb-4">
+            <div class="card shadow h-100">
+                <img src="@item.ImageUrl"
+                     class="card-img-top"
+                     style="height:220px;object-fit:cover;" />
+
+                <div class="card-body">
+                    <h5>@item.ProductName</h5>
+                    <p class="text-success fw-bold">₹ @item.Price</p>
+
+                    <a asp-controller="Product"
+                       asp-action="Details"
+                       asp-route-id="@item.ProductId"
+                       class="btn btn-warning w-100">
+                        View Details
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+<!-- ================= WHY CHOOSE US ================= -->
+
+<div class="container-fluid bg-light mt-5 py-5">
+
+    <div class="container">
+
+        <h2 class="text-center mb-5">
+            Why Choose WINGS Drone Solutions?
+        </h2>
+
+        <div class="row text-center">
+
+            <div class="col-md-3">
+
+                <h1>🚚</h1>
+
+                <h5>Fast Delivery</h5>
+
+                <p>
+                    PAN India shipping.
+                </p>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <h1>🛡️</h1>
+
+                <h5>Genuine Products</h5>
+
+                <p>
+                    Original drone components.
+                </p>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <h1>💳</h1>
+
+                <h5>Secure Payment</h5>
+
+                <p>
+                    Safe & trusted transactions.
+                </p>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <h1>🎧</h1>
+
+                <h5>Support</h5>
+
+                <p>
+                    Expert technical assistance.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="bg-dark text-white mt-5 p-4">
+
+    <div class="container text-center">
+
+        <h4>WINGS Drone Solutions</h4>
+
+        <p>
+            Fly Higher. Build Smarter.
+        </p>
+
+        <small>
+            © @DateTime.Now.Year WINGS Drone Solutions. All Rights Reserved.
+        </small>
+
+    </div>
+
+</footer>
+</div>

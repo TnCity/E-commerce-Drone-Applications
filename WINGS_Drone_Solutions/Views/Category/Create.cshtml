@@ -1,0 +1,27 @@
+﻿@model WINGS.Web.ViewModels.CategoryViewModel
+
+<h2>Add Category</h2>
+
+<form asp-action="Create" method="post" enctype="multipart/form-data">
+
+    <div class="mb-3">
+        <label asp-for="CategoryName" class="form-label"></label>
+        <input asp-for="CategoryName" class="form-control" />
+        <span asp-validation-for="CategoryName" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ImageFile" class="form-label"></label>
+        <input asp-for="ImageFile" class="form-control" type="file" />
+    </div>
+
+    <button type="submit" class="btn btn-success">Save</button>
+
+    <a asp-action="Index" class="btn btn-secondary">Back</a>
+
+</form>

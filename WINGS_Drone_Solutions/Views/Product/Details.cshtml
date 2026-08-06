@@ -1,0 +1,147 @@
+﻿@model WINGS.DAL.Entities.Product
+
+@{
+    ViewData["Title"] = "Product Details";
+}
+
+<div class="container mt-4">
+
+    <div class="card shadow-lg border-0">
+
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">Product Details</h3>
+        </div>
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <!-- Product Image -->
+                <div class="col-md-4 text-center">
+
+                    @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                    {
+                        <img src="@Model.ImageUrl"
+                             class="img-fluid rounded shadow"
+                             style="max-height:350px; object-fit:cover;" />
+                    }
+                    else
+                    {
+                        <img src="https://via.placeholder.com/350x300?text=No+Image"
+                             class="img-fluid rounded shadow" />
+                    }
+
+                </div>
+
+                <!-- Product Information -->
+                <div class="col-md-8">
+
+                    <table class="table table-bordered table-striped">
+
+                        <tr>
+                            <th width="220">Product Name</th>
+                            <td>
+                                <strong>@Model.ProductName</strong>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>Category</th>
+                            <td>@Model.Category?.CategoryName</td>
+                        </tr>
+
+                        <tr>
+                            <th>Brand</th>
+                            <td>@Model.Brand</td>
+                        </tr>
+
+                        <tr>
+                            <th>Price</th>
+                            <td class="text-success fw-bold">
+                                ₹ @Model.Price
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>Stock</th>
+                            <td>
+                                @if (Model.Stock > 0)
+                                {
+                                    <span class="badge bg-success">
+                                        @Model.Stock Available
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">
+                                        Out of Stock
+                                    </span>
+                                }
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>Description</th>
+                            <td>@Model.Description</td>
+                        </tr>
+
+                        <tr>
+                            <th>Product Status</th>
+                            <td>
+
+                                @if (Model.IsFeatured)
+                                {
+                                    <span class="badge bg-primary me-1">
+                                        ⭐ Featured
+                                    </span>
+                                }
+
+                                @if (Model.IsTrending)
+                                {
+                                    <span class="badge bg-warning text-dark me-1">
+                                        🔥 Trending
+                                    </span>
+                                }
+
+                                @if (Model.IsActive)
+                                {
+                                    <span class="badge bg-success">
+                                        Active
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">
+                                        Inactive
+                                    </span>
+                                }
+
+                            </td>
+                        </tr>
+
+                    </table>
+
+                    <div class="mt-4">
+
+                        <a asp-action="Edit"
+                           asp-route-id="@Model.ProductId"
+                           class="btn btn-warning">
+                            Edit Product
+                        </a>
+
+                        <a asp-action="Index"
+                           class="btn btn-secondary">
+                            Back
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

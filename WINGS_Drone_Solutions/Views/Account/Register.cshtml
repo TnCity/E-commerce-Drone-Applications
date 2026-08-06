@@ -1,0 +1,198 @@
+﻿@model WINGS.Web.ViewModels.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div style="background:linear-gradient(to right,#eef5ff,#ffffff); min-height:90vh;">
+
+    <div class="container py-5">
+
+        <div class="row justify-content-center align-items-center">
+
+            <!-- Left Side -->
+
+            <div class="col-lg-6 d-none d-lg-block text-center">
+
+                <img src="~/images/drone-banner1.jpg"
+                     class="img-fluid"
+                     style="max-height:600px;"
+                     alt="Register" />
+
+            </div>
+
+            <!-- Right Side -->
+
+            <div class="col-lg-6">
+
+                <div class="card border-0 shadow-lg rounded-4">
+
+                    <div class="card-body p-5">
+
+                        <div class="text-center mb-4">
+
+                            <h2 class="fw-bold text-primary">
+                                Create Your Account
+                            </h2>
+
+                            <p class="text-muted">
+                                Join WINGS Drone Solutions today
+                            </p>
+
+                        </div>
+
+                        <form asp-action="Register" method="post">
+
+                            <div asp-validation-summary="ModelOnly"
+                                 class="text-danger mb-3">
+                            </div>
+
+                            <!-- Full Name -->
+
+                            <div class="mb-3">
+
+                                <label asp-for="FullName"
+                                       class="form-label fw-semibold">
+                                </label>
+
+                                <input asp-for="FullName"
+                                       class="form-control form-control-lg"
+                                       placeholder="Enter Full Name" />
+
+                                <span asp-validation-for="FullName"
+                                      class="text-danger"></span>
+
+                            </div>
+
+                            <!-- Email -->
+
+                            <div class="mb-3">
+
+                                <label asp-for="Email"
+                                       class="form-label fw-semibold">
+                                </label>
+
+                                <input asp-for="Email"
+                                       class="form-control form-control-lg"
+                                       placeholder="Enter Email Address" />
+
+                                <span asp-validation-for="Email"
+                                      class="text-danger"></span>
+
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-md-6">
+
+                                    <div class="mb-3">
+
+                                        <label asp-for="Password"
+                                               class="form-label fw-semibold">
+                                        </label>
+
+                                        <input asp-for="Password"
+                                               type="password"
+                                               class="form-control form-control-lg"
+                                               placeholder="Password" />
+
+                                        <span asp-validation-for="Password"
+                                              class="text-danger"></span>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+
+                                    <div class="mb-3">
+
+                                        <label asp-for="ConfirmPassword"
+                                               class="form-label fw-semibold">
+                                        </label>
+
+                                        <input asp-for="ConfirmPassword"
+                                               type="password"
+                                               class="form-control form-control-lg"
+                                               placeholder="Confirm Password" />
+
+                                        <span asp-validation-for="ConfirmPassword"
+                                              class="text-danger"></span>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <!-- Phone -->
+
+                            <div class="mb-3">
+
+                                <label asp-for="Phone"
+                                       class="form-label fw-semibold">
+                                </label>
+
+                                <input asp-for="Phone"
+                                       class="form-control form-control-lg"
+                                       placeholder="Phone Number" />
+
+                            </div>
+
+                            <!-- Address -->
+
+                            <div class="mb-4">
+
+                                <label asp-for="Address"
+                                       class="form-label fw-semibold">
+                                </label>
+
+                                <textarea asp-for="Address"
+                                          rows="3"
+                                          class="form-control"
+                                          placeholder="Enter Address"></textarea>
+
+                            </div>
+
+                            <button type="submit"
+                                    class="btn btn-success btn-lg w-100 rounded-pill">
+
+                                Create Account
+
+                            </button>
+
+                        </form>
+
+                        <hr class="my-4" />
+
+                        <div class="text-center">
+
+                            <span class="text-muted">
+                                Already have an account?
+                            </span>
+
+                            <a asp-action="Login"
+                               class="fw-bold text-decoration-none">
+
+                                Login
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}
