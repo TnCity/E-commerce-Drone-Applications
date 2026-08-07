@@ -1,0 +1,18 @@
+# Build folders
+bin/
+obj/
+
+# Visual Studio
+.vs/
+.vscode/
+*.user
+*.suo
+
+# Logs
+*.log
+
+# Packages
+packages/
+
+# Zip files
+*.zip
