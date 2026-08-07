@@ -6,7 +6,7 @@ using WINGS.Web.ViewModels;
 
 namespace WINGS.Web.Controllers
 {
-    [AdminAuthorize]
+    
     public class CategoryController : Controller
     {
         private readonly CategoryService _categoryService;
@@ -27,6 +27,7 @@ namespace WINGS.Web.Controllers
         }
 
         // GET: Category/Create
+        [AdminAuthorize]
         public IActionResult Create()
         {
             return View();
@@ -74,6 +75,7 @@ namespace WINGS.Web.Controllers
         }
 
         // GET: Category/Edit/5
+        [AdminAuthorize]
         public async Task<IActionResult> Edit(int id)
         {
             var category = await _categoryService.GetCategoryByIdAsync(id);
@@ -85,6 +87,7 @@ namespace WINGS.Web.Controllers
         }
 
         // POST: Category/Edit
+        [AdminAuthorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Category category)
@@ -99,6 +102,7 @@ namespace WINGS.Web.Controllers
         }
 
         // GET: Category/Delete/5
+        [AdminAuthorize]
         public async Task<IActionResult> Delete(int id)
         {
             var category = await _categoryService.GetCategoryByIdAsync(id);
@@ -110,6 +114,7 @@ namespace WINGS.Web.Controllers
         }
 
         // POST: Category/Delete
+        [AdminAuthorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

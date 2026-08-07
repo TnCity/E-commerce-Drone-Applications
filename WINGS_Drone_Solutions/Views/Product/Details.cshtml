@@ -1,7 +1,12 @@
 ﻿@model WINGS.DAL.Entities.Product
-
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
 @{
     ViewData["Title"] = "Product Details";
+}
+
+@{
+    var role = HttpContextAccessor.HttpContext?.Session.GetString("Role");
 }
 
 <div class="container mt-4">
@@ -122,16 +127,25 @@
                     </table>
 
                     <div class="mt-4">
-
-                        <a asp-action="Edit"
-                           asp-route-id="@Model.ProductId"
-                           class="btn btn-warning">
-                            Edit Product
-                        </a>
+                        @if (role == "Admin")
+                        {
+                            <a asp-action="Edit"
+                               asp-route-id="@Model.ProductId"
+                               class="btn btn-warning">
+                                Edit Product
+                            </a>
+                        }
 
                         <a asp-action="Index"
                            class="btn btn-secondary">
                             Back
+                        </a>
+
+                        <a asp-controller="Product"
+                           asp-action="AddToCart"
+                           asp-route-id="@Model.ProductId"
+                           class="btn btn-warning">
+                            <i class="bi bi-cart-plus"></i> Add To Cart
                         </a>
 
                     </div>

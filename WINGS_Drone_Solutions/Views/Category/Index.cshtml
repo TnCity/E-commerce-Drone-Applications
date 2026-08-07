@@ -1,16 +1,23 @@
 ﻿@model IEnumerable<WINGS.DAL.Entities.Category>
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
 
 @{
     ViewData["Title"] = "Categories";
 }
 
-<h2>Category List</h2>
+@{
+    var role = HttpContextAccessor.HttpContext?.Session.GetString("Role");
+}
 
-<p>
-    <a asp-action="Create" class="btn btn-primary">
-        <i class="bi bi-plus-circle"></i> Add Category
-    </a>
-</p>
+<h2>Category List</h2>
+@if (role == "Admin"){
+    <p>
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Add Category
+        </a>
+    </p>
+}
 
 <table class="table table-bordered table-hover align-middle">
     <thead class="table-dark">
@@ -19,7 +26,11 @@
             <th>Image</th>
             <th>Category Name</th>
             <th>Description</th>
-            <th width="180">Action</th>
+
+            @if (role == "Admin")
+            {
+                <th width="180">Action</th>
+            }
         </tr>
     </thead>
     <tbody>
@@ -47,20 +58,23 @@
 
                 <td>@item.Description</td>
 
-                <td>
-                    <a asp-action="Edit"
-                       asp-route-id="@item.CategoryId"
-                       class="btn btn-warning btn-sm">
-                        Edit
-                    </a>
+                @if (role == "Admin"){
+                
+                    <td>
+                        <a asp-action="Edit"
+                           asp-route-id="@item.CategoryId"
+                           class="btn btn-warning btn-sm">
+                            Edit
+                        </a>
 
-                    <a asp-action="Delete"
-                       asp-route-id="@item.CategoryId"
-                       class="btn btn-danger btn-sm"
-                       onclick="return confirm('Are you sure you want to delete this category?');">
-                        Delete
-                    </a>
-                </td>
+                        <a asp-action="Delete"
+                           asp-route-id="@item.CategoryId"
+                           class="btn btn-danger btn-sm"
+                           onclick="return confirm('Are you sure you want to delete this category?');">
+                            Delete
+                        </a>
+                    </td>
+                }
             </tr>
         }
     </tbody>

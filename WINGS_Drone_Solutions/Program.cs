@@ -26,6 +26,10 @@ builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<UserService>();
 
+//Add to card
+builder.Services.AddScoped<ICartRepository, CartRepository>();
+builder.Services.AddScoped<CartService>();
+
 // Session
 builder.Services.AddHttpContextAccessor();
 
