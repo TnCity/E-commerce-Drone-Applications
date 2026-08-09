@@ -30,6 +30,10 @@ builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<ICartRepository, CartRepository>();
 builder.Services.AddScoped<CartService>();
 
+//for Order
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<OrderService>();
+
 // Session
 builder.Services.AddHttpContextAccessor();
 
