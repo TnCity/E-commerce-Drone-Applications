@@ -1,0 +1,294 @@
+﻿@model WINGS.Web.ViewModels.PaymentViewModel
+
+@{
+    ViewData["Title"] = "Payment";
+}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-7">
+
+            <div class="card shadow-lg border-0">
+
+                <div class="card-header bg-primary text-white text-center py-3">
+
+                    <h3 class="mb-0">
+                        💳 Secure Payment
+                    </h3>
+
+                    <small>
+                        WINGS Drone Solutions
+                    </small>
+
+                </div>
+
+
+                <div class="card-body p-4">
+
+                    <!-- Amount -->
+
+                    <div class="text-center mb-4">
+
+                        <p class="text-muted mb-1">
+                            Amount Payable
+                        </p>
+
+                        <h1 class="fw-bold text-success">
+                            ₹ @Model.Amount.ToString("N2")
+                        </h1>
+
+                    </div>
+
+
+                    <form asp-action="Index"
+                          method="post">
+
+                        @Html.AntiForgeryToken()
+
+                        <div asp-validation-summary="ModelOnly"
+                             class="alert alert-danger">
+                        </div>
+
+
+                        <!-- Payment Method -->
+
+                        <div class="mb-4">
+
+                            <label asp-for="PaymentMethod"
+                                   class="form-label fw-bold">
+
+                                Payment Method
+
+                            </label>
+
+                            <select asp-for="PaymentMethod"
+                                    class="form-select"
+                                    id="paymentMethod">
+
+                                <option value="UPI">
+                                    UPI
+                                </option>
+
+                                <option value="Card">
+                                    Credit / Debit Card
+                                </option>
+
+                                <option value="COD">
+                                    Cash on Delivery
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- UPI -->
+
+                        <div id="upiSection">
+
+                            <div class="mb-4">
+
+                                <label asp-for="UPIId"
+                                       class="form-label">
+
+                                    UPI ID
+
+                                </label>
+
+                                <input asp-for="UPIId"
+                                       class="form-control"
+                                       placeholder="example@upi" />
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- CARD -->
+
+                        <div id="cardSection"
+                             style="display:none;">
+
+                            <div class="mb-3">
+
+                                <label asp-for="CardNumber"
+                                       class="form-label">
+
+                                    Card Number
+
+                                </label>
+
+                                <input asp-for="CardNumber"
+                                       class="form-control"
+                                       maxlength="19"
+                                       placeholder="XXXX XXXX XXXX XXXX" />
+
+                            </div>
+
+
+                            <div class="row">
+
+                                <div class="col-md-6">
+
+                                    <label asp-for="ExpiryDate"
+                                           class="form-label">
+
+                                        Expiry Date
+
+                                    </label>
+
+                                    <input asp-for="ExpiryDate"
+                                           class="form-control"
+                                           placeholder="MM/YY" />
+
+                                </div>
+
+
+                                <div class="col-md-6">
+
+                                    <label asp-for="CVV"
+                                           class="form-label">
+
+                                        CVV
+
+                                    </label>
+
+                                    <input asp-for="CVV"
+                                           type="password"
+                                           class="form-control"
+                                           maxlength="4"
+                                           placeholder="***" />
+
+                                </div>
+
+                            </div>
+
+                            <div class="alert alert-warning mt-3">
+
+                                <small>
+                                    🔒 Do not enter real card
+                                    information in this demo.
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- COD -->
+
+                        <div id="codSection"
+                             style="display:none;">
+
+                            <div class="alert alert-info">
+
+                                <strong>
+                                    Cash on Delivery
+                                </strong>
+
+                                <br />
+
+                                Pay when your order is delivered.
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Pay -->
+
+                        <button type="submit"
+                                class="btn btn-success btn-lg w-100 mt-4">
+
+                            🔒 Pay ₹ @Model.Amount.ToString("N2")
+
+                        </button>
+
+
+                        <a asp-controller="Order"
+                           asp-action="Checkout"
+                           class="btn btn-outline-secondary w-100 mt-2">
+
+                            ← Back to Checkout
+
+                        </a>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function() {
+
+                const method =
+                    document.getElementById(
+                        "paymentMethod");
+
+                const upi =
+                    document.getElementById(
+                        "upiSection");
+
+                const card =
+                    document.getElementById(
+                        "cardSection");
+
+                const cod =
+                    document.getElementById(
+                        "codSection");
+
+
+                function updatePaymentUI() {
+
+                    upi.style.display = "none";
+
+                    card.style.display = "none";
+
+                    cod.style.display = "none";
+
+
+                    if (method.value === "UPI") {
+
+                        upi.style.display = "block";
+
+                    }
+                    else if (method.value === "Card") {
+
+                        card.style.display = "block";
+
+                    }
+                    else if (method.value === "COD") {
+
+                        cod.style.display = "block";
+
+                    }
+                }
+
+
+                method.addEventListener(
+                    "change",
+                    updatePaymentUI);
+
+                updatePaymentUI();
+
+            });
+
+    </script>
+}

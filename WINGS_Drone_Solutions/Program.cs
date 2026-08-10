@@ -1,3 +1,8 @@
+using System;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Stripe;
 using Microsoft.EntityFrameworkCore;
 using WINGS.BLL.Services;
 using WINGS.DAL.Connection;
@@ -6,8 +11,20 @@ using WINGS.Repository.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Load Stripe API key from configuration or environment variable
+var stripeKey = builder.Configuration["Stripe:SecretKey"]
+               ?? Environment.GetEnvironmentVariable("STRIPE_SECRET_KEY");
+
+if (string.IsNullOrWhiteSpace(stripeKey))
+{
+    throw new InvalidOperationException("Stripe API key not configured. Set 'Stripe:SecretKey' in appsettings or the STRIPE_SECRET_KEY environment variable.");
+}
+
+StripeConfiguration.ApiKey = stripeKey;
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
 
 // Register DbContext
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -20,7 +37,7 @@ builder.Services.AddScoped<CategoryService>();
 
 // Product
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
-builder.Services.AddScoped<ProductService>();
+builder.Services.AddScoped<WINGS.BLL.Services.ProductService>();
 
 // User
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -33,6 +50,13 @@ builder.Services.AddScoped<CartService>();
 //for Order
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<OrderService>();
+
+//payement
+builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
+builder.Services.AddScoped<PaymentService>();
+
+// Optionally register a StripeClient for DI consumers
+builder.Services.AddSingleton(new StripeClient(stripeKey));
 
 // Session
 builder.Services.AddHttpContextAccessor();
@@ -67,5 +91,6 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapRazorPages();
 
 app.Run();
