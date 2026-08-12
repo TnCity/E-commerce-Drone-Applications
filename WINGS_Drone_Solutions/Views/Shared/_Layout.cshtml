@@ -1,5 +1,10 @@
-﻿
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
 
+@{
+    var role = HttpContextAccessor.HttpContext?
+        .Session.GetString("Role");
+}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -92,7 +97,6 @@
                         </a>
 
                     </li>
-
                     <li class="nav-item">
 
                         <a class="nav-link"
@@ -104,6 +108,21 @@
                         </a>
 
                     </li>
+
+                    @if (role == "Admin")
+                    {
+                        <li class="nav-item">
+
+                            <a class="nav-link"
+                               asp-controller="ContactMessage"
+                               asp-action="Index">
+
+                                Contact Messages
+
+                            </a>
+
+                        </li>
+                    }
 
                 </ul>
 

@@ -1,4 +1,6 @@
-﻿@{
+﻿@model WINGS.Web.ViewModels.ContactViewModel
+
+@{
     ViewData["Title"] = "Contact Us";
 }
 
@@ -16,6 +18,18 @@
 
     </div>
 
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show">
+            @TempData["Success"]
+
+            <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert">
+            </button>
+        </div>
+    }
+
     <div class="row">
 
         <!-- Contact Form -->
@@ -30,70 +44,127 @@
                         Send Message
                     </h3>
 
-                    <form>
+                    <form asp-controller="Home"
+                          asp-action="Contact"
+                          method="post">
+
+                        @Html.AntiForgeryToken()
+
+                        <div asp-validation-summary="ModelOnly"
+                             class="text-danger mb-3">
+                        </div>
+
+
+                        <!-- Full Name -->
 
                         <div class="mb-3">
 
-                            <label class="form-label">
+                            <label asp-for="FullName"
+                                   class="form-label">
                                 Full Name
                             </label>
 
-                            <input type="text"
+                            <input asp-for="FullName"
                                    class="form-control"
-                                   placeholder="Enter your name">
+                                   placeholder="Enter your name" />
+
+                            <span asp-validation-for="FullName"
+                                  class="text-danger">
+                            </span>
 
                         </div>
 
+
+                        <!-- Email -->
+
                         <div class="mb-3">
 
-                            <label class="form-label">
+                            <label asp-for="Email"
+                                   class="form-label">
                                 Email Address
                             </label>
 
-                            <input type="email"
+                            <input asp-for="Email"
                                    class="form-control"
-                                   placeholder="Enter your email">
+                                   placeholder="Enter your email" />
+
+                            <span asp-validation-for="Email"
+                                  class="text-danger">
+                            </span>
 
                         </div>
 
+
+                        <!-- Phone -->
+
                         <div class="mb-3">
 
-                            <label class="form-label">
+                            <label asp-for="Phone"
+                                   class="form-label">
                                 Phone Number
                             </label>
 
-                            <input type="text"
+                            <input asp-for="Phone"
                                    class="form-control"
-                                   placeholder="Enter phone number">
+                                   placeholder="Enter phone number" />
+
+                            <span asp-validation-for="Phone"
+                                  class="text-danger">
+                            </span>
 
                         </div>
 
+
+                        <!-- Subject -->
+
                         <div class="mb-3">
 
-                            <label class="form-label">
+                            <label asp-for="Subject"
+                                   class="form-label">
                                 Subject
                             </label>
 
-                            <input type="text"
+                            <input asp-for="Subject"
                                    class="form-control"
-                                   placeholder="Enter subject">
+                                   placeholder="Enter subject" />
+
+                            <span asp-validation-for="Subject"
+                                  class="text-danger">
+                            </span>
 
                         </div>
+
+
+                        <!-- Message -->
 
                         <div class="mb-3">
 
-                            <label class="form-label">
+                            <label asp-for="Message"
+                                   class="form-label">
                                 Message
                             </label>
 
-                            <textarea class="form-control"
+                            <textarea asp-for="Message"
+                                      class="form-control"
                                       rows="6"
-                                      placeholder="Write your message"></textarea>
+                                      placeholder="Write your message">
+                            </textarea>
+
+                            <span asp-validation-for="Message"
+                                  class="text-danger">
+                            </span>
 
                         </div>
 
-                        <button class="btn btn-primary btn-lg px-5">
+
+                        <!-- Submit -->
+
+                        <button type="submit"
+                                class="btn btn-primary btn-lg px-5">
+
+                            <i class="bi bi-send"></i>
                             Send Message
+
                         </button>
 
                     </form>
@@ -103,6 +174,7 @@
             </div>
 
         </div>
+
 
         <!-- Company Details -->
 
@@ -154,6 +226,7 @@
 
             </div>
 
+
             <!-- Google Map -->
 
             <div class="card shadow border-0 rounded-4">
@@ -180,3 +253,8 @@
     </div>
 
 </div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

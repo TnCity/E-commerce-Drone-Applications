@@ -10,13 +10,17 @@ namespace WINGS.Web.Controllers
     public class CategoryController : Controller
     {
         private readonly CategoryService _categoryService;
+
+        private readonly ProductService _productService;
         private readonly IWebHostEnvironment _environment;
 
         public CategoryController(CategoryService categoryService,
-                                  IWebHostEnvironment environment)
+                                  IWebHostEnvironment environment,
+                                  ProductService productService)
         {
             _categoryService = categoryService;
             _environment = environment;
+            _productService = productService;
         }
 
         // GET: Category
@@ -121,6 +125,39 @@ namespace WINGS.Web.Controllers
         {
             await _categoryService.DeleteCategoryAsync(id);
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ViewAvailables(int id)
+        {
+            if (id <= 0)
+            {
+                return BadRequest();
+            }
+
+            // Get category
+            var category =
+                await _categoryService.GetCategoryByIdAsync(id);
+
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            // Get all products
+            var allProducts =
+                await _productService.GetAllProductsAsync();
+
+            // Filter products by category
+            var products = allProducts
+                .Where(p => p.CategoryId == id)
+                .ToList();
+
+            // Send category information to View
+            ViewData["CategoryName"] = category.CategoryName;
+            ViewData["CategoryId"] = category.CategoryId;
+
+            return View(products);
         }
     }
 }

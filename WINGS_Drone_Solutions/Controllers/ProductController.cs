@@ -216,7 +216,7 @@ namespace WINGS.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        //---------------------------------------------------Add to card function--------------------------------------//
+        //--------------------------------------------------- Add to card function --------------------------------------//
         //
         [HttpGet]
         public async Task<IActionResult> AddToCart(int id)

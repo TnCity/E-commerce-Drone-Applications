@@ -1,0 +1,191 @@
+﻿@model IEnumerable<WINGS.DAL.Entities.Product>
+
+@{
+    ViewData["Title"] = "Available Products";
+}
+
+<div class="container mt-4">
+
+    <!-- HEADER -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h2>
+                <i class="bi bi-box-seam"></i>
+                Available Products
+            </h2>
+
+            <p class="text-muted mb-0">
+
+                Category:
+
+                <strong>
+                    @ViewData["CategoryName"]
+                </strong>
+
+            </p>
+
+        </div>
+
+
+        <a asp-action="Index"
+           class="btn btn-secondary">
+
+            <i class="bi bi-arrow-left"></i>
+
+            Back to Categories
+
+        </a>
+
+    </div>
+
+
+    <!-- PRODUCTS -->
+    @if (Model != null && Model.Any())
+    {
+        <div class="row">
+
+            @foreach (var product in Model)
+            {
+                <div class="col-md-4 col-lg-3 mb-4">
+
+                    <div class="card h-100 shadow-sm border-0">
+
+
+                        <!-- PRODUCT IMAGE -->
+                        @if (!string.IsNullOrEmpty(product.ImageUrl))
+                        {
+                            <img src="@product.ImageUrl"
+                                 class="card-img-top"
+                                 style="height:220px;
+                            object-fit:cover;" />
+                        }
+                        else
+                        {
+                            <div class="d-flex
+                                justify-content-center
+                                align-items-center
+                                bg-light"
+                                 style="height:220px;">
+
+                                <span class="text-muted">
+
+                                    No Image
+
+                                </span>
+
+                            </div>
+                        }
+
+
+                        <!-- PRODUCT DETAILS -->
+
+                        <div class="card-body">
+
+                            <h5 class="card-title">
+
+                                @product.ProductName
+
+                            </h5>
+
+
+                            @if (!string.IsNullOrEmpty(product.Brand))
+                            {
+                                <p class="text-muted mb-2">
+
+                                    Brand:
+                                    <strong>
+                                        @product.Brand
+                                    </strong>
+
+                                </p>
+                            }
+
+
+                            <p class="card-text">
+
+                                @product.Description
+
+                            </p>
+
+
+                            <h5 class="text-success">
+
+                                ₹@product.Price.ToString("N2")
+
+                            </h5>
+
+
+                            <!-- STOCK -->
+                            @if (product.Stock > 0)
+                            {
+                                <span class="badge bg-success">
+
+                                    In Stock
+                                    (@product.Stock)
+
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">
+
+                                    Out of Stock
+
+                                </span>
+                            }
+
+                        </div>
+
+
+                        <!-- FOOTER -->
+
+                        <div class="card-footer bg-white border-0">
+
+                            <a asp-controller="Product"
+                               asp-action="Details"
+                               asp-route-id="@product.ProductId"
+                               class="btn btn-outline-primary w-100">
+
+                                <i class="bi bi-eye"></i>
+
+                                View Details
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            }
+
+        </div>
+    }
+    else
+    {
+        <!-- NO PRODUCTS -->
+
+        <div class="alert alert-info text-center shadow-sm">
+
+            <h4>
+
+                <i class="bi bi-info-circle"></i>
+
+                No Products Available
+
+            </h4>
+
+            <p class="mb-0">
+
+                There are currently no products
+                available in this category.
+
+            </p>
+
+        </div>
+    }
+
+</div>

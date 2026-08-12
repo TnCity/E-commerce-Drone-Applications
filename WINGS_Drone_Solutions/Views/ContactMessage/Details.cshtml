@@ -1,0 +1,185 @@
+﻿@model WINGS.DAL.Entities.ContactMessage
+
+@{
+    ViewData["Title"] = "Contact Message";
+}
+
+<div class="container mt-5">
+
+    <div class="d-flex justify-content-between
+        align-items-center mb-4">
+
+        <div>
+            <h2 class="fw-bold">
+                Contact Message
+            </h2>
+
+            <p class="text-muted">
+                Message #@Model.ContactMessageId
+            </p>
+        </div>
+
+        <a asp-action="Index"
+           class="btn btn-outline-secondary">
+
+            <i class="bi bi-arrow-left"></i>
+            Back
+
+        </a>
+
+    </div>
+
+
+    <div class="card shadow border-0 rounded-4">
+
+        <div class="card-body p-4">
+
+            <div class="row">
+
+                <!-- Customer Information -->
+
+                <div class="col-md-6">
+
+                    <h5 class="fw-bold mb-3">
+                        Customer Information
+                    </h5>
+
+                    <p>
+                        <strong>Name:</strong><br />
+                        @Model.FullName
+                    </p>
+
+                    <p>
+                        <strong>Email:</strong><br />
+
+                        <a href="mailto:@Model.Email">
+                            @Model.Email
+                        </a>
+                    </p>
+
+                    <p>
+                        <strong>Phone:</strong><br />
+
+                        @if (!string.IsNullOrEmpty(Model.Phone))
+                        {
+                            <a href="tel:@Model.Phone">
+                                @Model.Phone
+                            </a>
+                        }
+                        else
+                        {
+                            <span class="text-muted">
+                                Not provided
+                            </span>
+                        }
+                    </p>
+
+                </div>
+
+
+                <!-- Message Information -->
+
+                <div class="col-md-6">
+
+                    <h5 class="fw-bold mb-3">
+                        Message Information
+                    </h5>
+
+                    <p>
+                        <strong>Subject:</strong><br />
+                        @Model.Subject
+                    </p>
+
+                    <p>
+                        <strong>Received:</strong><br />
+
+                        @Model.CreatedAt
+                        .ToString("dd MMMM yyyy hh:mm tt")
+                    </p>
+
+                    <p>
+                        <strong>Status:</strong><br />
+
+                        @if (Model.IsRead)
+                        {
+                            <span class="badge bg-success">
+                                Read
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-warning text-dark">
+                                Unread
+                            </span>
+                        }
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <hr />
+
+
+            <!-- Customer Message -->
+
+            <div class="mt-4">
+
+                <h5 class="fw-bold mb-3">
+                    Customer Message
+                </h5>
+
+                <div class="bg-light p-4 rounded-3">
+
+                    <p class="mb-0"
+                       style="white-space: pre-wrap;">
+                        @Model.Message
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="mt-4">
+
+                <a asp-action="Index"
+                   class="btn btn-secondary">
+
+                    <i class="bi bi-arrow-left"></i>
+                    Back to Messages
+
+                </a>
+
+                @if (!Model.IsRead)
+                {
+                    <form asp-action="MarkAsRead"
+                          method="post"
+                          class="d-inline">
+
+                        @Html.AntiForgeryToken()
+
+                        <input type="hidden"
+                               name="id"
+                               value="@Model.ContactMessageId" />
+
+                        <button type="submit"
+                                class="btn btn-success">
+
+                            <i class="bi bi-check-circle"></i>
+                            Mark as Read
+
+                        </button>
+
+                    </form>
+                }
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

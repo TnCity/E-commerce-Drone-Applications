@@ -1,0 +1,149 @@
+﻿@model IEnumerable<WINGS.DAL.Entities.ContactMessage>
+
+@{
+    ViewData["Title"] = "Contact Messages";
+}
+
+<div class="container mt-5">
+
+    <div class="d-flex justify-content-between
+        align-items-center mb-4">
+
+        <div>
+            <h2 class="fw-bold">
+                Contact Messages
+            </h2>
+
+            <p class="text-muted mb-0">
+                Messages received from customers
+            </p>
+        </div>
+
+        <a asp-controller="Home"
+           asp-action="Contact"
+           class="btn btn-outline-primary">
+
+            <i class="bi bi-envelope"></i>
+            Contact Page
+
+        </a>
+
+    </div>
+
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">
+            No contact messages have been received yet.
+        </div>
+    }
+    else
+    {
+        <div class="card shadow border-0 rounded-4">
+
+            <div class="card-body p-0">
+
+                <div class="table-responsive">
+
+                    <table class="table table-hover
+                        align-middle mb-0">
+
+                        <thead class="table-dark">
+
+                            <tr>
+
+                                <th>#</th>
+
+                                <th>Name</th>
+
+                                <th>Email</th>
+
+                                <th>Subject</th>
+
+                                <th>Date</th>
+
+                                <th>Status</th>
+
+                                <th>Action</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            @foreach (var message in Model)
+                            {
+                                <tr>
+
+                                    <td>
+                                        @message.ContactMessageId
+                                    </td>
+
+                                    <td>
+                                        <strong>
+                                            @message.FullName
+                                        </strong>
+                                    </td>
+
+                                    <td>
+                                        @message.Email
+                                    </td>
+
+                                    <td>
+                                        @message.Subject
+                                    </td>
+
+                                    <td>
+                                        @message.CreatedAt
+                                        
+                                    </td>
+
+                                    <td>
+
+                                        @if (message.IsRead)
+                                        {
+                                            <span class="badge
+                                                bg-success">
+                                                Read
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge
+                                                bg-warning
+                                                text-dark">
+                                                Unread
+                                            </span>
+                                        }
+
+                                    </td>
+
+                                    <td>
+
+                                        <a asp-action="Details"
+                                           asp-route-id="@message.ContactMessageId"
+                                           class="btn btn-primary btn-sm">
+
+                                            <i class="bi bi-eye"></i>
+                                            View
+
+                                        </a>
+
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+    }
+
+</div>

@@ -55,6 +55,10 @@ builder.Services.AddScoped<OrderService>();
 builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 builder.Services.AddScoped<PaymentService>();
 
+//ContactMessage:
+builder.Services.AddScoped<IContactMessageRepository, ContactMessageRepository>();
+builder.Services.AddScoped<ContactMessageService>();
+
 // Optionally register a StripeClient for DI consumers
 builder.Services.AddSingleton(new StripeClient(stripeKey));
 
