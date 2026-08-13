@@ -6,83 +6,293 @@
 @{
     ViewData["Title"] = "Add Product";
 
-    var role = HttpContextAccessor.HttpContext?.Session.GetString("Role");
+    var role = HttpContextAccessor.HttpContext?
+        .Session.GetString("Role");
+
+    bool isAdmin = role == "Admin";
 }
 
-@if (role == "Admin")
+@if (isAdmin)
 {
-    <div class="container mt-4">
+    <div class="container-fluid py-4">
 
-        <div class="card shadow-lg border-0">
+        <!-- ================= PAGE HEADER ================= -->
 
-            <div class="card-header bg-primary text-white">
+        <div class="d-flex justify-content-between align-items-center mb-4">
 
-                <h3 class="mb-0">
+            <div>
+                <h2 class="fw-bold mb-1">
+                    <i class="bi bi-box-seam-fill text-primary me-2"></i>
                     Add Product
-                </h3>
+                </h2>
+
+                <p class="text-muted mb-0">
+                    Add a new drone product to your store inventory.
+                </p>
+            </div>
+
+            <a asp-action="Index"
+               class="btn btn-outline-secondary">
+
+                <i class="bi bi-arrow-left me-1"></i>
+                Back to Products
+
+            </a>
+
+        </div>
+
+
+        <!-- ================= MAIN CARD ================= -->
+
+        <div class="card border-0 shadow-sm">
+
+            <!-- HEADER -->
+
+            <div class="card-header bg-dark text-white py-3">
+
+                <div class="d-flex align-items-center">
+
+                    <i class="bi bi-plus-circle-fill fs-4 me-2"></i>
+
+                    <div>
+                        <h5 class="mb-0">
+                            Product Information
+                        </h5>
+
+                        <small class="text-white-50">
+                            Enter the details of the new product
+                        </small>
+                    </div>
+
+                </div>
 
             </div>
 
-            <div class="card-body">
+
+            <!-- BODY -->
+
+            <div class="card-body p-4">
 
                 <form asp-action="Create"
                       method="post"
                       enctype="multipart/form-data">
 
+                    <!-- VALIDATION -->
+
                     <div asp-validation-summary="ModelOnly"
-                         class="text-danger mb-3"></div>
-
-                    <div class="mb-3">
-                        <label asp-for="ProductName" class="form-label"></label>
-                        <input asp-for="ProductName" class="form-control" />
-                        <span asp-validation-for="ProductName" class="text-danger"></span>
+                         class="alert alert-danger"
+                         role="alert">
                     </div>
 
-                    <div class="mb-3">
-                        <label asp-for="CategoryId" class="form-label"></label>
 
-                        <select asp-for="CategoryId"
-                                asp-items="Model.Categories"
-                                class="form-select">
+                    <!-- ================= BASIC INFORMATION ================= -->
 
-                            <option value="">-- Select Category --</option>
+                    <div class="mb-4">
 
-                        </select>
+                        <h5 class="fw-bold border-bottom pb-2 mb-4">
 
-                        <span asp-validation-for="CategoryId"
-                              class="text-danger"></span>
+                            <i class="bi bi-info-circle text-primary me-2"></i>
+                            Basic Information
+
+                        </h5>
+
+
+                        <div class="row g-4">
+
+                            <!-- PRODUCT NAME -->
+
+                            <div class="col-md-8">
+
+                                <label asp-for="ProductName"
+                                       class="form-label fw-semibold">
+
+                                    Product Name
+
+                                </label>
+
+                                <div class="input-group">
+
+                                    <span class="input-group-text">
+                                        <i class="bi bi-box"></i>
+                                    </span>
+
+                                    <input asp-for="ProductName"
+                                           class="form-control"
+                                           placeholder="Enter product name" />
+
+                                </div>
+
+                                <span asp-validation-for="ProductName"
+                                      class="text-danger small">
+                                </span>
+
+                            </div>
+
+
+                            <!-- CATEGORY -->
+
+                            <div class="col-md-4">
+
+                                <label asp-for="CategoryId"
+                                       class="form-label fw-semibold">
+
+                                    Category
+
+                                </label>
+
+                                <div class="input-group">
+
+                                    <span class="input-group-text">
+                                        <i class="bi bi-tags"></i>
+                                    </span>
+
+                                    <select asp-for="CategoryId"
+                                            asp-items="Model.Categories"
+                                            class="form-select">
+
+                                        <option value="">
+                                            -- Select Category --
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+                                <span asp-validation-for="CategoryId"
+                                      class="text-danger small">
+                                </span>
+
+                            </div>
+
+
+                            <!-- DESCRIPTION -->
+
+                            <div class="col-12">
+
+                                <label asp-for="Description"
+                                       class="form-label fw-semibold">
+
+                                    Description
+
+                                </label>
+
+                                <textarea asp-for="Description"
+                                          class="form-control"
+                                          rows="5"
+                                          placeholder="Describe the product, features, specifications, etc.">
+                                </textarea>
+
+                                <span asp-validation-for="Description"
+                                      class="text-danger small">
+                                </span>
+
+                            </div>
+
+                        </div>
+
                     </div>
 
-                    <div class="row">
 
-                        <div class="col-md-6">
+                    <!-- ================= PRICING & INVENTORY ================= -->
 
-                            <div class="mb-3">
+                    <div class="mb-4">
 
-                                <label asp-for="Price" class="form-label"></label>
+                        <h5 class="fw-bold border-bottom pb-2 mb-4">
 
-                                <input asp-for="Price"
-                                       class="form-control" />
+                            <i class="bi bi-currency-rupee text-success me-2"></i>
+                            Pricing & Inventory
+
+                        </h5>
+
+
+                        <div class="row g-4">
+
+                            <!-- PRICE -->
+
+                            <div class="col-md-4">
+
+                                <label asp-for="Price"
+                                       class="form-label fw-semibold">
+
+                                    Price
+
+                                </label>
+
+                                <div class="input-group">
+
+                                    <span class="input-group-text">
+                                        ₹
+                                    </span>
+
+                                    <input asp-for="Price"
+                                           class="form-control"
+                                           placeholder="0.00" />
+
+                                </div>
 
                                 <span asp-validation-for="Price"
-                                      class="text-danger"></span>
+                                      class="text-danger small">
+                                </span>
 
                             </div>
 
-                        </div>
 
-                        <div class="col-md-6">
+                            <!-- STOCK -->
 
-                            <div class="mb-3">
+                            <div class="col-md-4">
 
                                 <label asp-for="Stock"
-                                       class="form-label"></label>
+                                       class="form-label fw-semibold">
 
-                                <input asp-for="Stock"
-                                       class="form-control" />
+                                    Stock Quantity
+
+                                </label>
+
+                                <div class="input-group">
+
+                                    <span class="input-group-text">
+                                        <i class="bi bi-stack"></i>
+                                    </span>
+
+                                    <input asp-for="Stock"
+                                           class="form-control"
+                                           placeholder="Enter quantity" />
+
+                                </div>
 
                                 <span asp-validation-for="Stock"
-                                      class="text-danger"></span>
+                                      class="text-danger small">
+                                </span>
+
+                            </div>
+
+
+                            <!-- BRAND -->
+
+                            <div class="col-md-4">
+
+                                <label asp-for="Brand"
+                                       class="form-label fw-semibold">
+
+                                    Brand
+
+                                </label>
+
+                                <div class="input-group">
+
+                                    <span class="input-group-text">
+                                        <i class="bi bi-building"></i>
+                                    </span>
+
+                                    <input asp-for="Brand"
+                                           class="form-control"
+                                           placeholder="Enter brand name" />
+
+                                </div>
+
+                                <span asp-validation-for="Brand"
+                                      class="text-danger small">
+                                </span>
 
                             </div>
 
@@ -90,93 +300,235 @@
 
                     </div>
 
-                    <div class="mb-3">
 
-                        <label asp-for="Brand"
-                               class="form-label"></label>
+                    <!-- ================= PRODUCT IMAGE ================= -->
 
-                        <input asp-for="Brand"
-                               class="form-control" />
+                    <div class="mb-4">
+
+                        <h5 class="fw-bold border-bottom pb-2 mb-4">
+
+                            <i class="bi bi-image text-info me-2"></i>
+                            Product Image
+
+                        </h5>
+
+
+                        <div class="row align-items-center">
+
+                            <div class="col-md-8">
+
+                                <label asp-for="ImageFile"
+                                       class="form-label fw-semibold">
+
+                                    Upload Product Image
+
+                                </label>
+
+                                <input asp-for="ImageFile"
+                                       type="file"
+                                       class="form-control"
+                                       accept="image/*"
+                                       id="imageInput" />
+
+                                <div class="form-text">
+
+                                    Recommended: JPG, PNG or WEBP.
+                                    Use a clear product image.
+
+                                </div>
+
+                                <span asp-validation-for="ImageFile"
+                                      class="text-danger small">
+                                </span>
+
+                            </div>
+
+
+                            <!-- IMAGE PREVIEW -->
+
+                            <div class="col-md-4 text-center mt-3 mt-md-0">
+
+                                <div id="imagePreviewContainer"
+                                     class="border rounded-3 bg-light d-flex
+                                    align-items-center justify-content-center mx-auto"
+                                     style="width:150px;height:150px;">
+
+                                    <div id="imagePlaceholder">
+
+                                        <i class="bi bi-image text-muted"
+                                           style="font-size:45px;">
+                                        </i>
+
+                                        <div class="small text-muted">
+                                            Image Preview
+                                        </div>
+
+                                    </div>
+
+                                    <img id="imagePreview"
+                                         src="#"
+                                         alt="Preview"
+                                         class="d-none rounded-3"
+                                         style="width:150px;height:150px;object-fit:cover;" />
+
+                                </div>
+
+                            </div>
+
+                        </div>
 
                     </div>
 
-                    <div class="mb-3">
 
-                        <label asp-for="Description"
-                               class="form-label"></label>
+                    <!-- ================= PRODUCT STATUS ================= -->
 
-                        <textarea asp-for="Description"
-                                  class="form-control"
-                                  rows="4"></textarea>
+                    <div class="mb-4">
+
+                        <h5 class="fw-bold border-bottom pb-2 mb-4">
+
+                            <i class="bi bi-toggle-on text-warning me-2"></i>
+                            Product Status
+
+                        </h5>
+
+
+                        <div class="row g-3">
+
+                            <!-- FEATURED -->
+
+                            <div class="col-md-4">
+
+                                <div class="card border h-100">
+
+                                    <div class="card-body">
+
+                                        <div class="form-check form-switch">
+
+                                            <input asp-for="IsFeatured"
+                                                   class="form-check-input"
+                                                   role="switch" />
+
+                                            <label asp-for="IsFeatured"
+                                                   class="form-check-label fw-semibold">
+
+                                                <i class="bi bi-star-fill text-primary me-1"></i>
+                                                Featured Product
+
+                                            </label>
+
+                                        </div>
+
+                                        <small class="text-muted">
+                                            Highlight this product as featured.
+                                        </small>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- TRENDING -->
+
+                            <div class="col-md-4">
+
+                                <div class="card border h-100">
+
+                                    <div class="card-body">
+
+                                        <div class="form-check form-switch">
+
+                                            <input asp-for="IsTrending"
+                                                   class="form-check-input"
+                                                   role="switch" />
+
+                                            <label asp-for="IsTrending"
+                                                   class="form-check-label fw-semibold">
+
+                                                <i class="bi bi-fire text-warning me-1"></i>
+                                                Trending Product
+
+                                            </label>
+
+                                        </div>
+
+                                        <small class="text-muted">
+                                            Mark this product as trending.
+                                        </small>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- ACTIVE -->
+
+                            <div class="col-md-4">
+
+                                <div class="card border h-100">
+
+                                    <div class="card-body">
+
+                                        <div class="form-check form-switch">
+
+                                            <input asp-for="IsActive"
+                                                   class="form-check-input"
+                                                   role="switch" />
+
+                                            <label asp-for="IsActive"
+                                                   class="form-check-label fw-semibold">
+
+                                                <i class="bi bi-check-circle-fill text-success me-1"></i>
+                                                Active Product
+
+                                            </label>
+
+                                        </div>
+
+                                        <small class="text-muted">
+                                            Make this product available to customers.
+                                        </small>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
 
                     </div>
 
-                    <div class="mb-3">
 
-                        <label asp-for="ImageFile"
-                               class="form-label"></label>
+                    <!-- ================= ACTIONS ================= -->
 
-                        <input asp-for="ImageFile"
-                               type="file"
-                               class="form-control" />
+                    <div class="border-top pt-4">
 
-                    </div>
+                        <div class="d-flex justify-content-end gap-2">
 
-                    <hr />
+                            <a asp-action="Index"
+                               class="btn btn-outline-secondary px-4">
 
-                    <h5 class="mb-3">
-                        Product Status
-                    </h5>
+                                <i class="bi bi-x-circle me-1"></i>
+                                Cancel
 
-                    <div class="form-check">
+                            </a>
 
-                        <input asp-for="IsFeatured"
-                               class="form-check-input" />
 
-                        <label asp-for="IsFeatured"
-                               class="form-check-label">
-                            Featured Product
-                        </label>
+                            <button type="submit"
+                                    class="btn btn-success px-4">
 
-                    </div>
+                                <i class="bi bi-check-circle me-1"></i>
+                                Save Product
 
-                    <div class="form-check">
+                            </button>
 
-                        <input asp-for="IsTrending"
-                               class="form-check-input" />
-
-                        <label asp-for="IsTrending"
-                               class="form-check-label">
-                            Trending Product
-                        </label>
+                        </div>
 
                     </div>
-
-                    <div class="form-check mb-4">
-
-                        <input asp-for="IsActive"
-                               class="form-check-input" />
-
-                        <label asp-for="IsActive"
-                               class="form-check-label">
-                            Active Product
-                        </label>
-
-                    </div>
-
-                    <button type="submit"
-                            class="btn btn-success">
-
-                        Save Product
-
-                    </button>
-
-                    <a asp-action="Index"
-                       class="btn btn-secondary">
-
-                        Cancel
-
-                    </a>
 
                 </form>
 
@@ -188,30 +540,93 @@
 }
 else
 {
-    <div class="container mt-5">
+    <!-- ================= ACCESS DENIED ================= -->
 
-        <div class="alert alert-danger text-center shadow">
+    <div class="container py-5">
 
-            <h3>Access Denied</h3>
+        <div class="card border-0 shadow-sm text-center">
 
-            <p>
-                You are not authorized to access this page.
-            </p>
+            <div class="card-body py-5">
 
-            <a asp-controller="Home"
-               asp-action="Index"
-               class="btn btn-primary">
+                <div class="mb-3">
 
-                Back to Home
+                    <i class="bi bi-shield-lock-fill text-danger"
+                       style="font-size:60px;">
+                    </i>
 
-            </a>
+                </div>
+
+                <h3 class="fw-bold">
+                    Access Denied
+                </h3>
+
+                <p class="text-muted mb-4">
+
+                    You are not authorized to add products.
+
+                </p>
+
+                <a asp-controller="Home"
+                   asp-action="Index"
+                   class="btn btn-primary px-4">
+
+                    <i class="bi bi-house me-1"></i>
+                    Back to Home
+
+                </a>
+
+            </div>
 
         </div>
 
     </div>
 }
 
+
 @section Scripts
 {
     <partial name="_ValidationScriptsPartial" />
+
+    <script>
+
+        // Product image preview
+
+        document.getElementById("imageInput")?.addEventListener("change", function(event) {
+
+            const file = event.target.files[0];
+
+            const preview = document.getElementById("imagePreview");
+
+            const placeholder = document.getElementById("imagePlaceholder");
+
+            if (file) {
+
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+
+                    preview.src = e.target.result;
+
+                    preview.classList.remove("d-none");
+
+                    placeholder.classList.add("d-none");
+
+                };
+
+                reader.readAsDataURL(file);
+
+            }
+            else {
+
+                preview.src = "#";
+
+                preview.classList.add("d-none");
+
+                placeholder.classList.remove("d-none");
+
+            }
+
+        });
+
+    </script>
 }

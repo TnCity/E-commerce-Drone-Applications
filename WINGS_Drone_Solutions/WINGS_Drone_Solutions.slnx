@@ -2,6 +2,7 @@
   <Folder Name="/Database/">
     <File Path="WINGS_Drone_DB.sql" />
   </Folder>
+  <Folder Name="/Solution Items/" />
   <Project Path="../WINGS.BLL/WINGS.BLL.csproj" />
   <Project Path="../WINGS.DAL/WINGS.DAL.csproj" />
   <Project Path="../WINGS.Repository/WINGS.Repository.csproj" />

@@ -1,28 +1,272 @@
 ﻿@model WINGS.DAL.Entities.Category
 
-<h2>Edit Category</h2>
+@{
+    ViewData["Title"] = "Edit Category";
+}
 
-<form asp-action="Edit" method="post">
+<div class="container py-4">
 
-    <input type="hidden" asp-for="CategoryId" />
+    <!-- ================= PAGE HEADER ================= -->
 
-    <div class="mb-3">
-        <label asp-for="CategoryName"></label>
-        <input asp-for="CategoryName" class="form-control" />
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2 class="fw-bold mb-1">
+                <i class="bi bi-pencil-square text-primary me-2"></i>
+                Edit Category
+            </h2>
+
+            <p class="text-muted mb-0">
+                Update the category information below.
+            </p>
+        </div>
+
+        <a asp-action="Index"
+           class="btn btn-outline-secondary">
+
+            <i class="bi bi-arrow-left me-1"></i>
+            Back to Categories
+
+        </a>
+
     </div>
 
-    <div class="mb-3">
-        <label asp-for="Description"></label>
-        <textarea asp-for="Description" class="form-control"></textarea>
+
+    <!-- ================= MAIN CARD ================= -->
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8">
+
+            <div class="card border-0 shadow-sm">
+
+                <!-- HEADER -->
+
+                <div class="card-header bg-dark text-white py-3">
+
+                    <div class="d-flex align-items-center">
+
+                        <i class="bi bi-tags-fill fs-4 me-2"></i>
+
+                        <div>
+
+                            <h5 class="mb-0">
+                                Category Information
+                            </h5>
+
+                            <small class="text-white-50">
+                                Update category details
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- BODY -->
+
+                <div class="card-body p-4">
+
+                    <form asp-action="Edit"
+                          method="post">
+
+                        @Html.AntiForgeryToken()
+
+                        <input type="hidden"
+                               asp-for="CategoryId" />
+
+
+                        <!-- VALIDATION -->
+
+                        <div asp-validation-summary="ModelOnly"
+                             class="alert alert-danger">
+                        </div>
+
+
+                        <!-- CATEGORY NAME -->
+
+                        <div class="mb-4">
+
+                            <label asp-for="CategoryName"
+                                   class="form-label fw-semibold">
+
+                                Category Name
+
+                            </label>
+
+                            <div class="input-group">
+
+                                <span class="input-group-text">
+                                    <i class="bi bi-tag"></i>
+                                </span>
+
+                                <input asp-for="CategoryName"
+                                       class="form-control"
+                                       placeholder="Enter category name" />
+
+                            </div>
+
+                            <span asp-validation-for="CategoryName"
+                                  class="text-danger small">
+                            </span>
+
+                        </div>
+
+
+                        <!-- DESCRIPTION -->
+
+                        <div class="mb-4">
+
+                            <label asp-for="Description"
+                                   class="form-label fw-semibold">
+
+                                Description
+
+                            </label>
+
+                            <textarea asp-for="Description"
+                                      class="form-control"
+                                      rows="5"
+                                      placeholder="Enter category description">
+                            </textarea>
+
+                            <span asp-validation-for="Description"
+                                  class="text-danger small">
+                            </span>
+
+                        </div>
+
+
+                        <!-- CURRENT IMAGE -->
+
+                        <div class="mb-4">
+
+                            <label class="form-label fw-semibold">
+                                Current Category Image
+                            </label>
+
+                            <div class="border rounded-3 p-3 bg-light">
+
+                                @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                                {
+                                    <div class="d-flex align-items-center gap-3">
+
+                                        <img src="@Model.ImageUrl"
+                                             alt="@Model.CategoryName"
+                                             class="rounded border shadow-sm"
+                                             style="width:120px;
+                                        height:120px;
+                                        object-fit:cover;" />
+
+                                        <div>
+
+                                            <h6 class="fw-bold mb-1">
+                                                @Model.CategoryName
+                                            </h6>
+
+                                            <small class="text-muted">
+                                                Current category image
+                                            </small>
+
+                                        </div>
+
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="text-center py-4">
+
+                                        <i class="bi bi-image text-muted"
+                                           style="font-size:45px;">
+                                        </i>
+
+                                        <p class="text-muted mb-0">
+                                            No image available
+                                        </p>
+
+                                    </div>
+                                }
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- IMAGE URL -->
+
+                        <div class="mb-4">
+
+                            <label asp-for="ImageUrl"
+                                   class="form-label fw-semibold">
+
+                                Image URL
+
+                            </label>
+
+                            <div class="input-group">
+
+                                <span class="input-group-text">
+                                    <i class="bi bi-link-45deg"></i>
+                                </span>
+
+                                <input asp-for="ImageUrl"
+                                       class="form-control"
+                                       placeholder="/uploads/categories/image.jpg" />
+
+                            </div>
+
+                            <div class="form-text">
+                                Update the image path only if necessary.
+                            </div>
+
+                            <span asp-validation-for="ImageUrl"
+                                  class="text-danger small">
+                            </span>
+
+                        </div>
+
+
+                        <!-- ACTIONS -->
+
+                        <div class="border-top pt-4">
+
+                            <div class="d-flex justify-content-end gap-2">
+
+                                <a asp-action="Index"
+                                   class="btn btn-outline-secondary px-4">
+
+                                    <i class="bi bi-x-circle me-1"></i>
+                                    Cancel
+
+                                </a>
+
+                                <button type="submit"
+                                        class="btn btn-primary px-4">
+
+                                    <i class="bi bi-check-circle me-1"></i>
+                                    Update Category
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
 
-    <div class="mb-3">
-        <label asp-for="ImageUrl"></label>
-        <input asp-for="ImageUrl" class="form-control" />
-    </div>
+</div>
 
-    <button class="btn btn-primary">Update</button>
-
-    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
-
-</form>
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}
